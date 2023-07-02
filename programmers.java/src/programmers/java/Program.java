@@ -1,34 +1,49 @@
 package programmers.java;
 
+import java.util.Stack;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 public class Program {
 
 	public static void main(String[] args) {
-		System.out.println(Solution.solution("-1 1 2 3 4"));
+		int[] arr = {1,2,4,3,5}; 
+		System.out.println(Solution.solution(arr));
 	}
-	public static class Solution {
-	    public static String solution(String s) {
-	    	int min;
-	    	int max;
-	    	StringTokenizer st = new StringTokenizer(s);
-    	//	System.out.println(st.nextToken());
-    		min = Integer.parseInt(st.nextToken());
-    		int now=Integer.parseInt(st.nextToken());
-    		if(min>now) {
-    			max=min;
-    			min=now;
-    		}else
-    			max=now;
-	    	while(st.hasMoreTokens()) {
-	    		now = Integer.parseInt(st.nextToken());
-	    		if(now>max)
-	    			max=now;
-	    		if(now<min)
-	    			min=now;
-
+	class Solution {
+	    public static int solution(int[] order) {
+	    	Stack sub=new Stack();
+	        int answer = 0;
+	        int start=order[0];
+	        int count=2;
+	    	for(int i=1;i<start;i++) {
+	    		sub.push(i);
+	    		count++;
 	    	}
-	        return min+" "+max;
+    		answer++;
+	    	for(int i=1;i<order.length;i++) {
+	    		if(sub.size()>0&&sub.peek().equals(order[i])) {
+	    			sub.pop();
+	    			answer++;
+	    			continue;
+	    		}
+	    		else if(order[i]==count) {
+	    			answer++;
+	    			count++;
+	    			continue;
+	    		}else if(order[i]>count) {
+	    			while(order[i]!=count) {
+	    	    		sub.push(count);
+	    	    		count++;
+	    	    	}
+	    			System.out.println(count);
+	    			answer++;
+	    			continue;
+	    		}
+	    		else
+	    		break;
+	    	}
+	        return answer;
 	    }
 	}
 }
