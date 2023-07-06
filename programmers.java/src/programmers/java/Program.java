@@ -8,30 +8,29 @@ import java.util.Vector;
 public class Program {
 
 	public static void main(String[] args) {
-		int array[]= {-3,-1,2,2,2,2,2,3,100000};
+		int array[]= {1,2,3,3,5,7,8,4,2,3,5,4,6,4,5};
 		//System.out.println(Solution.solution(array));
 		for(int i:Solution.solution(array)) {
 			System.out.print(i+" ");
 		}
 	}
-	class Solution {
+	public class Solution {
 	    public static int[] solution(int[] numbers) {
-	        int[] answer=new int[numbers.length];
-	        Arrays.fill(answer, -1);
-	        int now;
-	        for(int i=0;i<numbers.length-1;i++) {
-	        	System.out.println(i);
-	        	now=numbers[i];
-	        	for(int n=i;n<numbers.length;n++) {
-	        		if(numbers[n]>now) {
-	        			Arrays.fill(answer,i,n,numbers[n]);
-	        			i=n-1;
-	        			break;
-	        		}
-	        	}
-	        	
+	        int[] result = new int[numbers.length];
+	        Stack<Integer> stack = new Stack<>();
+
+	        for (int i = numbers.length - 1; i >= 0; i--) {
+	            while (!stack.isEmpty() && stack.peek() <= numbers[i]) {
+	                stack.pop();
+	            }
+	            if (stack.isEmpty()) {
+	                result[i] = -1;
+	            } else {
+	                result[i] = stack.peek();
+	            }
+	            stack.push(numbers[i]);
 	        }
-	        return answer;
+	        return result;
 	    }
 	}
 	}
